@@ -2,15 +2,14 @@ CC = g++
 LFLAGS = -std=c++11
 CFLAGS = -c -Wall
 
-# Edit the following line when compiling
-# SOURCES should include all the .cpp files to compile
-SOURCES = 
+# Edit the following SOURCES variable to include all of the .cpp files to compile
+SOURCES = main.cpp UniqueVectorTester.cpp ClassroomTester.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE_NAME = UniqueVector
 
 all: $(EXECUTABLE_NAME)
 
-$(EXECUTABLE_NAME): $(OBJECTS) 
+$(EXECUTABLE_NAME): $(OBJECTS)
 	$(CC) -o $(EXECUTABLE_NAME) $(OBJECTS)
 
 .cpp.o:
