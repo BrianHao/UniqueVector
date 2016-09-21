@@ -85,7 +85,7 @@ bool UniqueVector<T>::at(unsigned int pos, T& data) {
 //  array with double the capacity and copies all of the elements over.
 template <typename T>
 bool UniqueVector<T>::insert(const T& data) {
-    return true;
+    //TODO
 }
 
 //If the vector does not already contain data, adds a new element, data, to the
@@ -94,7 +94,7 @@ bool UniqueVector<T>::insert(const T& data) {
 //  with double the capacity and copies all of the elements over.
 template <typename T>
 bool UniqueVector<T>::insert(const T& data, unsigned int pos){
-    
+    //TODO
 }
 
 //If the vector does not already contain data, adds a new element, data, to the
@@ -103,7 +103,7 @@ bool UniqueVector<T>::insert(const T& data, unsigned int pos){
 //  with double the capacity and copies all of the elements over.
 template <typename T>
 bool UniqueVector<T>::push_front(const T& data){
-    
+    //TODO
 }
 
 //If the vector contains data, removes data from the vector, reduces the container
@@ -111,7 +111,7 @@ bool UniqueVector<T>::push_front(const T& data){
 //  returns false.
 template <typename T>
 bool UniqueVector<T>::remove(const T& data){
-    
+    //TODO
 }
 
 //If pos is a valid position, removes the element in position pos, stores it in data,
@@ -119,7 +119,7 @@ bool UniqueVector<T>::remove(const T& data){
 //  otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::remove(unsigned int pos, T& data){
-    
+    //TODO
 }
 
 //If the vector is not empty, removes the last element in the vector, stores it in data,
@@ -127,20 +127,20 @@ bool UniqueVector<T>::remove(unsigned int pos, T& data){
 //  true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::pop_back(T& data){
-    
+    //TODO
 }
 
 //Empties the vector of its elements and resets the capacity to 3.
 template <typename T>
 void UniqueVector<T>::clear(){
-    
+    //TODO
 }
 
 //If the vector on the left hand side has the same elements in the same order as the
 //  vector on the right hand side, returns true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::operator==(const UniqueVector& otherUniqueVector){
-    
+    //TODO
 }
 
 //Copies the main array into a temporary array, deletes the current array,
