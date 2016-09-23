@@ -9,11 +9,11 @@ public:
     UniqueVector();
     UniqueVector(unsigned const int initialCapacity);
     virtual ~UniqueVector();
-    unsigned int capacity();
-    unsigned int size();
-    bool empty();
+    unsigned int capacity() const;
+    unsigned int size() const;
+    bool empty() const;
     bool contains(const T& data);
-    bool at(unsigned int pos, T& data);
+    bool at(unsigned int pos, T& data) const;
     bool insert(const T& data);
     bool insert(const T& data, unsigned int pos);
     bool push_front(const T& data);

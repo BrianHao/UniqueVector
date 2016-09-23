@@ -31,19 +31,19 @@ UniqueVector<T>::~UniqueVector() {
 
 //Returns the size of the space currently allocated for the vector.
 template <typename T>
-unsigned int UniqueVector<T>::capacity() {
+unsigned int UniqueVector<T>::capacity() const {
     return currentCapacity;
 }
 
 //Returns the current number of elements in the vector.
 template <typename T>
-unsigned int UniqueVector<T>::size() {
+unsigned int UniqueVector<T>::size() const{
     return numElements;
 }
 
 //If the vector contains zero elements, returns true; otherwise, returns false.
 template <typename T>
-bool UniqueVector<T>::empty() {
+bool UniqueVector<T>::empty() const {
     if (numElements == 0) {
         return true;
     } else {
@@ -57,7 +57,7 @@ bool UniqueVector<T>::contains(const T& data){
     bool hasData = false;
     if (!this->empty()) {
         for (unsigned int i = 0; i < numElements; i++) {
-            if (mainArray[i]==data) {
+            if (mainArray[i]==data) {       //Iterates through array to find a match
                 hasData = true;
                 break;
             }
@@ -70,7 +70,7 @@ bool UniqueVector<T>::contains(const T& data){
 //If pos is a valid position, retrieves the element in position pos in the array,
 //  stores it in data, and returns true; otherwise, returns false.
 template <typename T>
-bool UniqueVector<T>::at(unsigned int pos, T& data) {
+bool UniqueVector<T>::at(unsigned int pos, T& data) const {
     if (!this->empty() && pos<numElements) {
         data = mainArray[pos];
         return true;
@@ -87,6 +87,18 @@ template <typename T>
 bool UniqueVector<T>::insert(const T& data) {
     bool insertSuccessful = false;
     
+    if (!this->contains(data)) {
+        if (numElements == currentCapacity) {
+            this->extendArray();    //If array is full, extend it
+        }
+        
+        mainArray[numElements] = data;
+        numElements+=1;
+        
+        insertSuccessful = true;
+        
+    }
+    
     return insertSuccessful;
 }
 
@@ -98,6 +110,26 @@ template <typename T>
 bool UniqueVector<T>::insert(const T& data, unsigned int pos){
     bool insertSuccessful = false;
     
+    if (!this->contains(data) && pos==0 && numElements==0){
+        mainArray[pos] = data;              //If array is empty, inserts data into position 0
+        numElements+=1;
+        
+        insertSuccessful = true;
+        
+    } else if (!this->contains(data) && pos<numElements) { //If array is not empty, move elements back
+        if (numElements == currentCapacity) {
+            this->extendArray();    //If array is full, extend it
+        }
+        
+        for (unsigned int i = numElements; i > pos; i--) {
+            mainArray[i]=mainArray[i-1];    //Move all elements after (and including) position pos
+        }                                   //  back by 1 position
+        
+        mainArray[pos] = data;              //Stores data in position pos
+        numElements+=1;
+        
+        insertSuccessful = true;
+    }
     return insertSuccessful;
 }
 
@@ -107,9 +139,7 @@ bool UniqueVector<T>::insert(const T& data, unsigned int pos){
 //  with double the capacity and copies all of the elements over.
 template <typename T>
 bool UniqueVector<T>::push_front(const T& data){
-    bool pushSuccessful = false;
-    
-    return pushSuccessful;
+    return this->insert(data,0); //Calls above function ;)
 }
 
 //If the vector contains data, removes data from the vector, reduces the container
@@ -118,6 +148,18 @@ bool UniqueVector<T>::push_front(const T& data){
 template <typename T>
 bool UniqueVector<T>::remove(const T& data){
     bool removeSuccessful = false;
+    unsigned int pos = 0;
+    T temp; //Placeholder variable to use when calling below function
+    
+    if (this->contains(data)) {     //If array contains data, find its position
+        for (unsigned int i = 0; i < numElements; i++) {
+            if (mainArray[i]==data) {
+                pos=i;
+                break;
+            }
+        }
+        removeSuccessful = this->remove(pos,temp); //Calls below function to remove the data at position pos
+    }
     
     return removeSuccessful;
 }
@@ -129,6 +171,24 @@ template <typename T>
 bool UniqueVector<T>::remove(unsigned int pos, T& data){
     bool removeSuccessful = false;
     
+    if (!this->empty() && pos<numElements) {
+        
+        //data = mainArray[pos];    //Stores element at position pos to data before removing it
+                                    //WHY DOESN'T THIS WORK???????
+        
+        if (pos==numElements-1) {
+            numElements-=1;
+            removeSuccessful = true;
+        } else {
+            for (unsigned int i = pos; i < numElements-1; i++) {
+                mainArray[i]=mainArray[i+1];    //Moves all elements past position pos down by 1
+            }
+            
+            numElements-=1;
+            removeSuccessful = true;
+        }
+    }
+    
     return removeSuccessful;
 }
 
@@ -139,20 +199,52 @@ template <typename T>
 bool UniqueVector<T>::pop_back(T& data){
     bool popSuccessful = false;
     
+    if (!this->empty()) {
+        data = mainArray[numElements-1];
+        numElements-=1;
+        popSuccessful = true;
+    }
+    
+    
     return popSuccessful;
 }
 
 //Empties the vector of its elements and resets the capacity to 3.
 template <typename T>
 void UniqueVector<T>::clear(){
-    
+    delete[] mainArray;
+    numElements = 0;
+    currentCapacity = 3;
+    mainArray = new T[currentCapacity];
 }
 
 //If the vector on the left hand side has the same elements in the same order as the
 //  vector on the right hand side, returns true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::operator==(const UniqueVector& otherUniqueVector){
-    bool vectorsAreEqual = false;
+    bool vectorsAreEqual = true;
+    
+    //Checks if both vectors have the same size and capacity, then compares their contents
+    if (otherUniqueVector.size()==numElements && otherUniqueVector.capacity()==currentCapacity) {
+        if (numElements == 1) {
+            T otherVectorVal;
+            otherUniqueVector.at(0,otherVectorVal);
+            if (mainArray[0]!=otherVectorVal) {
+                vectorsAreEqual = false;
+            }
+        } else {
+            for (unsigned int i = 0; i < numElements; i++) {
+                T otherVectorVal;
+                otherUniqueVector.at(i,otherVectorVal);
+                if (mainArray[i]!=otherVectorVal) {
+                    vectorsAreEqual = false;
+                    break;
+                }
+            }
+        }
+    } else {
+        vectorsAreEqual = false;
+    }
     
     return vectorsAreEqual;
 }
