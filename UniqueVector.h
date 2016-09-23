@@ -7,7 +7,7 @@ template <typename T>
 class UniqueVector {
 public:
     UniqueVector();
-    UniqueVector(unsigned const int startCapacity);
+    UniqueVector(unsigned const int initialCapacity);
     virtual ~UniqueVector();
     unsigned int capacity();
     unsigned int size();
