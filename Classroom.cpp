@@ -79,7 +79,7 @@ string Classroom::removeAlphabeticallyLast(){
     
     classroomVector->at(0, alphaLast);
     
-    for (unsigned int i = 0; i < classroomVector->size(); i++) {
+    for (unsigned int i = 1; i < classroomVector->size(); i++) {
         classroomVector->at(i, comparisonName);
         if (alphaLast>=comparisonName) {
             alphaLast=comparisonName;
