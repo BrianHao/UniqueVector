@@ -17,6 +17,8 @@ public:
     string removeAlphabeticallyFirst();
     string removeAlphabeticallyLast();
     void combineClasses(Classroom& otherClass);
+    unsigned int classroomSize();
+    string studentAt(unsigned int pos);
     
 private:
     UniqueVector<string>* classroomVector;

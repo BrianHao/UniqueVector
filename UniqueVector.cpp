@@ -173,8 +173,7 @@ bool UniqueVector<T>::remove(unsigned int pos, T& data){
     
     if (!this->empty() && pos<numElements) {
         
-        //data = mainArray[pos];    //Stores element at position pos to data before removing it
-                                    //WHY DOESN'T THIS WORK???????
+        data = mainArray[pos];    //Stores element at position pos to data before removing it
         
         if (pos==numElements-1) {
             numElements-=1;
