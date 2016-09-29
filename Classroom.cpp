@@ -1,6 +1,7 @@
 #include "Classroom.h"
 #include "UniqueVector.h"
 #include <iostream>
+#include <string>
 using namespace std;
 
 //Default constructor
@@ -89,11 +90,11 @@ string Classroom::removeAlphabeticallyLast() {
 
 //Adds all of the student names on otherClass’ roster onto the roster of the Classroom calling
 //  this function and leaves otherClass unchanged.
-void Classroom::combineClasses(Classroom& otherClass) {
+void Classroom::combineClasses(Classroom& otherClassroom) {
     
     //Iterates through the otherClass' roster, and adds it to the current Class, if possible.
-    for (unsigned int i = 0; i < otherClass.classroomSize(); i++) {
-        addStudent(otherClass.studentAt(i));
+    for (unsigned int i = 0; i < otherClassroom.classroomSize(); i++) {
+        addStudent(otherClassroom.studentAt(i));
     }
 }
 

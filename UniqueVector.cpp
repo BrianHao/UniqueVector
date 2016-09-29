@@ -112,7 +112,7 @@ template <typename T>
 bool UniqueVector<T>::insert(const T& data, unsigned int pos) {
     if (contains(data) || pos > numElements) {
         return false;
-    } else if (pos==numElements) {  //If pos is the same index position as numElements, insert it there
+    } else if (pos==numElements) {  //If pos is n when there are n elements already, insert data in index n
         if (numElements == currentCapacity) {
             extendArray();
         }
@@ -224,7 +224,6 @@ bool UniqueVector<T>::operator==(const UniqueVector<T>& otherUniqueVector) {
     } else {
         return false;
     }
-    
     return true;
 }
 

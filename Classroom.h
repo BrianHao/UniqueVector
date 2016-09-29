@@ -2,6 +2,7 @@
 #define CLASSROOM_H
 #include "UniqueVector.h"
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Classroom {
