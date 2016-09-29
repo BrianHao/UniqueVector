@@ -11,9 +11,10 @@ public:
     virtual ~UniqueVector();
     unsigned int capacity() const;
     unsigned int size() const;
-    bool empty() const;
+    bool empty();
     bool contains(const T& data);
-    bool at(unsigned int pos, T& data) const;
+    bool contains(const T& data, unsigned int& pos);
+    bool at(unsigned int pos, T& data);
     bool insert(const T& data);
     bool insert(const T& data, unsigned int pos);
     bool push_front(const T& data);
@@ -21,13 +22,14 @@ public:
     bool remove(unsigned int pos, T& data);
     bool pop_back(T& data);
     void clear();
-    bool operator==(const UniqueVector& otherUniqueVector);
+    bool operator==(const UniqueVector<T>& otherUniqueVector);
     
 private:
     T* mainArray;
     unsigned int numElements;
     unsigned int currentCapacity;
     void extendArray();
+    T atPos(unsigned int pos) const;
 };
 
 #include "UniqueVector.cpp"
