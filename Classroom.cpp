@@ -4,46 +4,16 @@
 #include <string>
 using namespace std;
 
-//Default constructor
-Classroom::Classroom() {
-    classroomVector = new UniqueVector<string>;
-}
-
-//Constructor with provided initial capacity.
-Classroom::Classroom(unsigned const int initialCapacity) {
-    classroomVector = new UniqueVector<string>(initialCapacity);
-}
-
-//Destructor
-Classroom::~Classroom() {
-    delete classroomVector;
-}
-
-//If a student named name is not already on the classroom roster, adds a new student
-//  named name to the classroom roster and returns true; otherwise, returns false.
-bool Classroom::addStudent(const string& name) {
-    return classroomVector->insert(name);
-}
-
-//If a student named name is on the classroom roster, removes the student named name
-//  from the classroom roster and returns true; otherwise, returns false.
-bool Classroom::removeStudent(const string& name) {
-    return classroomVector->remove(name);}
-
-//If a student named name is on the classroom roster, returns true; otherwise, returns false.
-bool Classroom::containsStudent(const string& name) {
-    return classroomVector->contains(name);
-}
-
 //Returns a string containing the names of the students in the classroom, separated by commas.
 string Classroom::listAllStudents() {
     string listOfStudents;
     string currentName;
     
     //Iterates through the classroomVector and adds each new name to the end of the string.
-    for (unsigned int i = 0; i<(classroomVector->size()); i++) {
-        listOfStudents+=studentAt(i);
-        if (i<(classroomSize()-1)) {
+    for (unsigned int i = 0; i<(classroomVector.size()); i++) {
+        classroomVector.at(i, currentName);
+        listOfStudents+=currentName;
+        if (i<(classroomVector.size()-1)) {
             listOfStudents+=",";
         }
     }
@@ -56,15 +26,15 @@ string Classroom::removeAlphabeticallyFirst() {
     string comparisonName;
     
     //Sets alphaFirst to the 0th element in the vector.
-    alphaFirst=studentAt(0);
+    classroomVector.at(0, alphaFirst);
     
     //Iterates through the vector and compares alphaFirst with current name.
-        for (unsigned int i = 1; i < classroomVector->size(); i++) {
-            comparisonName=studentAt(i);
-            if (alphaFirst.compare(comparisonName) > 0) {
-                alphaFirst=comparisonName;
-            }
+    for (unsigned int i = 1; i < classroomVector.size(); i++) {
+        classroomVector.at(i, comparisonName);
+        if (alphaFirst.compare(comparisonName) > 0) {
+            alphaFirst=comparisonName;
         }
+    }
     removeStudent(alphaFirst);
     
     return alphaFirst;
@@ -75,14 +45,16 @@ string Classroom::removeAlphabeticallyLast() {
     string alphaLast;
     string comparisonName;
     
-    alphaLast=studentAt(0);
+    //Sets alphaLast to the 0th element in the vector.
+    classroomVector.at(0, alphaLast);
 
-        for (unsigned int i = 1; i < classroomVector->size(); i++) {
-            comparisonName=studentAt(i);
-            if (alphaLast.compare(comparisonName) < 0) {
-                alphaLast=comparisonName;
-            }
+    //Iterates through the vector and compares alphaLast with current name.
+    for (unsigned int i = 1; i < classroomVector.size(); i++) {
+        classroomVector.at(i, comparisonName);
+        if (alphaLast.compare(comparisonName) < 0) {
+            alphaLast=comparisonName;
         }
+    }
     removeStudent(alphaLast);
     
     return alphaLast;
@@ -91,21 +63,11 @@ string Classroom::removeAlphabeticallyLast() {
 //Adds all of the student names on otherClass’ roster onto the roster of the Classroom calling
 //  this function and leaves otherClass unchanged.
 void Classroom::combineClasses(Classroom& otherClassroom) {
+    string otherStudent;
     
     //Iterates through the otherClass' roster, and adds it to the current Class, if possible.
-    for (unsigned int i = 0; i < otherClassroom.classroomSize(); i++) {
-        addStudent(otherClassroom.studentAt(i));
+    for (unsigned int i = 0; i < otherClassroom.classroomVector.size(); i++) {
+        otherClassroom.classroomVector.at(i, otherStudent);
+        addStudent(otherStudent);
     }
-}
-
-//Returns container size of Classroom.
-unsigned int Classroom::classroomSize() const {
-    return classroomVector->size();
-}
-
-//Returns name of student at position pos.
-string Classroom::studentAt(unsigned int pos) const {
-    string studentName;
-    classroomVector->at(pos, studentName);
-    return studentName;
 }
