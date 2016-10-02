@@ -64,9 +64,7 @@ Each entry in the vector must be unique.
 
 Lastly, the comparison operator == is overloaded to compare between two UniqueVectors.
 
-Both vectors must contain the same number of elements, as well as the same elements in
-
-    the same order.
+Both vectors must contain the same number of elements, as well as the same elements in the same order.
 
 ## Classroom
 Utilizes a UniqueVector to maintain a unique roster of students names, stored as strings.
@@ -96,17 +94,17 @@ $ ./UniqueVector
 
 ### To use a UniqueVector in your code
 In your code, include the header file for the UniqueVector class where you are using it (Assuming main.cpp):
-\#include <UniqueVector.h>
+    \#include <UniqueVector.h>
 
 Compile using the following commands:
 
-$ g++ -c -Wall -std=c++11 main.cpp -o main.o
+    $ g++ -c -Wall -std=c++11 main.cpp -o main.o
 
-$ g++ -c -Wall -std=c++11 UniqueVector.cpp -o UniqueVector.o
+    $ g++ -c -Wall -std=c++11 UniqueVector.cpp -o UniqueVector.o
 
-$ g++ -o YOUR_PROGRAM_NAME_HERE main.o UniqueVector.o
+    $ g++ -o YOUR_PROGRAM_NAME_HERE main.o UniqueVector.o
 
-$ ./YOUR_PROGRAM_NAME_HERE
+    $ ./YOUR_PROGRAM_NAME_HERE
 
 
 
@@ -116,12 +114,12 @@ In your code, include the header file for the Classroom class where you are usin
 
 Compile using the following commands:
 
-$ g++ -c -Wall -std=c++11 main.cpp -o main.o
+    $ g++ -c -Wall -std=c++11 main.cpp -o main.o
 
-$ g++ -c -Wall -std=c++11 UniqueVector.cpp -o UniqueVector.o
+    $ g++ -c -Wall -std=c++11 UniqueVector.cpp -o UniqueVector.o
 
-$ g++ -c -Wall -std=c++11 Classroom.cpp -o Classroom.o
+    $ g++ -c -Wall -std=c++11 Classroom.cpp -o Classroom.o
 
-$ g++ -o YOUR_PROGRAM_NAME_HERE main.o UniqueVectorTester.o ClassroomTester.o UniqueVector.o Classroom.o
+    $ g++ -o YOUR_PROGRAM_NAME_HERE main.o UniqueVectorTester.o ClassroomTester.o UniqueVector.o Classroom.o
 
-$ ./YOUR_PROGRAM_NAME_HERE
+    $ ./YOUR_PROGRAM_NAME_HERE
