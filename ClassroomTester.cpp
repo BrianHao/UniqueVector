@@ -1,19 +1,21 @@
 #include <iostream>
+#include <string>
 #include "Classroom.h"
 #include "catch.h"
 
-TEST_CASE("adding students preserves uniqueness","[addStudent]"){
+TEST_CASE("adding/removing/containment of students preserves uniqueness","[student]"){
 	Classroom myClass;
 
+	REQUIRE( myClass.listAllStudents() == "" );
+	
 	// Vector contains student after being added
 	REQUIRE( myClass.addStudent("Simon") == true );
 	REQUIRE( myClass.containsStudent("Simon") == true );
+	REQUIRE( myClass.listAllStudents() == "Simon" );
+	REQUIRE( myClass.addStudent("Simon") == false);
 
 	// Vector doesn't contain student never added
 	REQUIRE( myClass.containsStudent("Aarsh") == false );
-
-	// Vector doesn't re-add existing student
-	REQUIRE( myClass.addStudent("Simon") == false);
 
 	// Stress testing (ish)
 	REQUIRE( myClass.addStudent("John") == true);
@@ -21,8 +23,8 @@ TEST_CASE("adding students preserves uniqueness","[addStudent]"){
 	REQUIRE( myClass.addStudent("Jingle") == true);
 	REQUIRE( myClass.addStudent("Heimer") == true);
 	REQUIRE( myClass.addStudent("Schmidt") == true);
-
-	// Vector contains all students added so far
+	
+	REQUIRE( myClass.listAllStudents() == "Simon,John,Jacob,Jingle,Heimer,Schmidt" );
 	REQUIRE( myClass.containsStudent("Schmidt") == true);
 	REQUIRE( myClass.containsStudent("Heimer") == true);
 	REQUIRE( myClass.containsStudent("Jingle") == true);
@@ -32,17 +34,16 @@ TEST_CASE("adding students preserves uniqueness","[addStudent]"){
 
 	// Removing an existing student returns true
 	REQUIRE( myClass.removeStudent("Simon") == true);
-
-	// Vector no longer contains removed student
+	REQUIRE( myClass.listAllStudents() == "John,Jacob,Jingle,Heimer,Schmidt" );
 	REQUIRE( myClass.containsStudent("Simon") == false);
 
-	// Removing all students and performing same check
 	REQUIRE( myClass.removeStudent("John") == true);
 	REQUIRE( myClass.removeStudent("Jacob") == true);
 	REQUIRE( myClass.removeStudent("Jingle") == true);
 	REQUIRE( myClass.removeStudent("Heimer") == true);
 	REQUIRE( myClass.removeStudent("Schmidt") == true);
-
+	
+	REQUIRE( myClass.listAllStudents() == "" );
 	REQUIRE( myClass.containsStudent("Schmidt") == false);
 	REQUIRE( myClass.containsStudent("Heimer") == false);
 	REQUIRE( myClass.containsStudent("Jingle") == false);
@@ -51,107 +52,173 @@ TEST_CASE("adding students preserves uniqueness","[addStudent]"){
 	REQUIRE( myClass.containsStudent("Simon") == false);
 }
 
-TEST_CASE("Alphabetical add/removal testing", "[alphabetical]"){
+TEST_CASE("Alphabetically first student removal", "[alphabeticalFirst]"){
 	Classroom myClass;
-	SECTION("Alphabetically first simple"){
+
+	SECTION("Remove from beginning"){
+		REQUIRE( myClass.addStudent("A") == true );
+		REQUIRE( myClass.addStudent("B") == true );
+		REQUIRE( myClass.addStudent("C") == true );
+		REQUIRE( myClass.addStudent("D") == true );
+		REQUIRE( myClass.addStudent("E") == true );
+
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "A" );
+		REQUIRE( myClass.containsStudent("A") == false );
+		REQUIRE( myClass.listAllStudents() == "B,C,D,E" );
+
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "B" );
+		REQUIRE( myClass.containsStudent("B") == false );
+		REQUIRE( myClass.listAllStudents() == "C,D,E" );
+		
+		REQUIRE( myClass.removeStudent("C") == true );
+		REQUIRE( myClass.listAllStudents() == "D,E" );
+
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "D" );
+		REQUIRE( myClass.containsStudent("D") == false );
+		REQUIRE( myClass.listAllStudents() == "E" );
+
+	}
+	
+	SECTION("Remove from middle"){
+		REQUIRE( myClass.addStudent("G") == true );
+		REQUIRE( myClass.addStudent("H") == true );
+		
 		REQUIRE( myClass.addStudent("A") == true );
 		REQUIRE( myClass.addStudent("B") == true );
 		REQUIRE( myClass.addStudent("C") == true );
 		REQUIRE( myClass.addStudent("D") == true );
 		REQUIRE( myClass.addStudent("E") == true );
 		REQUIRE( myClass.addStudent("F") == true );
+
+		REQUIRE( myClass.addStudent("I") == true );
+		REQUIRE( myClass.addStudent("J") == true );
+		
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "A" );
+		REQUIRE( myClass.containsStudent("A") == false );
+		REQUIRE( myClass.listAllStudents() == "G,H,B,C,D,E,F,I,J" );
+
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "B" );
+		REQUIRE( myClass.containsStudent("B") == false );
+		REQUIRE( myClass.listAllStudents() == "G,H,C,D,E,F,I,J" );
+
+		REQUIRE( myClass.removeStudent("C") == true );
+		REQUIRE( myClass.listAllStudents() == "G,H,D,E,F,I,J" );
+		
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "D" );
+		REQUIRE( myClass.containsStudent("D") == false );
+		REQUIRE( myClass.listAllStudents() == "G,H,E,F,I,J" );
+		
+	}
+
+	SECTION("Remove from end"){
+		REQUIRE( myClass.addStudent("E") == true );
+		REQUIRE( myClass.addStudent("D") == true );
+		REQUIRE( myClass.addStudent("C") == true );
+		REQUIRE( myClass.addStudent("B") == true );
+		REQUIRE( myClass.addStudent("A") == true );
+
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "A" );
+		REQUIRE( myClass.containsStudent("A") == false );
+		REQUIRE( myClass.listAllStudents() == "E,D,C,B" );
+		
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "B" );
+		REQUIRE( myClass.containsStudent("B") == false );
+		REQUIRE( myClass.listAllStudents() == "E,D,C" );
+		
+		REQUIRE( myClass.removeStudent("C") == true );
+		REQUIRE( myClass.listAllStudents() == "E,D" );
+		
+		REQUIRE( myClass.removeAlphabeticallyFirst() == "D" );
+		REQUIRE( myClass.containsStudent("D") == false );
+		REQUIRE( myClass.listAllStudents() == "E" );
+	}
+	
+}
+
+TEST_CASE("Alphabetically last student removal", "[alphabeticalLast]"){
+	Classroom myClass;
+	
+	SECTION("Remove from beginning"){
+		REQUIRE( myClass.addStudent("A") == true );
+		REQUIRE( myClass.addStudent("B") == true );
+		REQUIRE( myClass.addStudent("C") == true );
+		REQUIRE( myClass.addStudent("D") == true );
+		REQUIRE( myClass.addStudent("E") == true );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "E" );
+		REQUIRE( myClass.containsStudent("E") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,D" );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "D" );
+		REQUIRE( myClass.containsStudent("D") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C" );
+		
+		REQUIRE( myClass.removeStudent("C") == true );
+		REQUIRE( myClass.listAllStudents() == "A,B" );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "B" );
+		REQUIRE( myClass.containsStudent("B") == false );
+		REQUIRE( myClass.listAllStudents() == "A" );
+		
+	}
+	
+	SECTION("Remove from middle"){
+		REQUIRE( myClass.addStudent("A") == true );
+		REQUIRE( myClass.addStudent("B") == true );
+		REQUIRE( myClass.addStudent("C") == true );
+
 		REQUIRE( myClass.addStudent("G") == true );
 		REQUIRE( myClass.addStudent("H") == true );
 		REQUIRE( myClass.addStudent("I") == true );
 		REQUIRE( myClass.addStudent("J") == true );
-		REQUIRE( myClass.addStudent("K") == true );
-		REQUIRE( myClass.addStudent("L") == true );
-		REQUIRE( myClass.addStudent("M") == true );
-		REQUIRE( myClass.addStudent("N") == true );
-		REQUIRE( myClass.addStudent("O") == true );
-		REQUIRE( myClass.addStudent("P") == true );
+		
+		REQUIRE( myClass.addStudent("D") == true );
+		REQUIRE( myClass.addStudent("E") == true );
+		REQUIRE( myClass.addStudent("F") == true );
 
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "A" );
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "B" );
-		REQUIRE( myClass.removeStudent("C") == true );
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "D" );
-
-	}
-
-	SECTION("Aplhabetically first complex"){
-
-		REQUIRE( myClass.addStudent("aargau") == true );
-		REQUIRE( myClass.addStudent("aargh") == true );
-		REQUIRE( myClass.addStudent("aarhus") == true );
-		REQUIRE( myClass.addStudent("aari") == true );
-
-		// Alphabetically second:
-		REQUIRE( myClass.addStudent("aaren") == true );
-
-		REQUIRE( myClass.addStudent("aarika") == true );
-		REQUIRE( myClass.addStudent("aariya") == true );
-		REQUIRE( myClass.addStudent("aarnet") == true );
-		REQUIRE( myClass.addStudent("aaron") == true );
-		REQUIRE( myClass.addStudent("aaronic") == true );
-		REQUIRE( myClass.addStudent("aaronical") == true );
-
-		// Alphabetically first:
-		REQUIRE( myClass.addStudent("aardvark") == true );
-
-		// Removing from end of vector:
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "aardvark" );
-
-		// Removing from middle of vector:
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "aaren" );
-
-		// Removing from beginning of vector:
-		REQUIRE( myClass.removeAlphabeticallyFirst() == "aargau" );
-
-
-	}
-
-	SECTION("Alphabetically last simple"){
-		REQUIRE( myClass.addStudent("Q") == true );
-		REQUIRE( myClass.addStudent("R") == true );
-		REQUIRE( myClass.addStudent("S") == true );
-		REQUIRE( myClass.addStudent("T") == true );
-		REQUIRE( myClass.addStudent("U") == true );
-		REQUIRE( myClass.addStudent("V") == true );
-		REQUIRE( myClass.addStudent("W") == true );
-		REQUIRE( myClass.addStudent("X") == true );
-		REQUIRE( myClass.addStudent("Y") == true );
-		REQUIRE( myClass.addStudent("Z") == true );
-
-		REQUIRE( myClass.removeAlphabeticallyLast() == "Z" );
-		REQUIRE( myClass.removeAlphabeticallyLast() == "Y" );
-		REQUIRE( myClass.removeStudent("X") == true);
-		REQUIRE( myClass.removeAlphabeticallyLast() == "W" );
-	}
-	SECTION("Alphabetically last complex"){
-		REQUIRE( myClass.addStudent("zyzop") == true );
-		REQUIRE( myClass.addStudent("zywiel") == true );
-
-		// Alphabetically secondToLast:
-		REQUIRE( myClass.addStudent("zyzzogeton") == true );
-
-		REQUIRE( myClass.addStudent("zyxel") == true );
-		REQUIRE( myClass.addStudent("zyzomys") == true );
-
-		// Alphabetically last:
-		REQUIRE( myClass.addStudent("zzzz") == true );
-
-		// Removing from end of vector:
-		REQUIRE( myClass.removeAlphabeticallyLast() == "zzzz" );
-
-		// Removing from middle of vector:
-		REQUIRE( myClass.removeAlphabeticallyLast() == "zyzzogeton" );
-
-		// Removing from beginning of vector:
-		REQUIRE( myClass.removeAlphabeticallyLast() == "zyzop" );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "J" );
+		REQUIRE( myClass.containsStudent("J") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,G,H,I,D,E,F");
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "I" );
+		REQUIRE( myClass.containsStudent("I") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,G,H,D,E,F");
+		
+		REQUIRE( myClass.removeStudent("H") == true );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,G,D,E,F");
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "G" );
+		REQUIRE( myClass.containsStudent("G") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,D,E,F");
 		
 	}
+	
+	SECTION("Remove from end"){
+		REQUIRE( myClass.addStudent("A") == true );
+		REQUIRE( myClass.addStudent("B") == true );
+		REQUIRE( myClass.addStudent("C") == true );
+		REQUIRE( myClass.addStudent("D") == true );
+		REQUIRE( myClass.addStudent("E") == true );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "E" );
+		REQUIRE( myClass.containsStudent("E") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C,D" );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "D" );
+		REQUIRE( myClass.containsStudent("D") == false );
+		REQUIRE( myClass.listAllStudents() == "A,B,C" );
+		
+		REQUIRE( myClass.removeStudent("C") == true );
+		REQUIRE( myClass.listAllStudents() == "A,B" );
+		
+		REQUIRE( myClass.removeAlphabeticallyLast() == "B" );
+		REQUIRE( myClass.containsStudent("B") == false );
+		REQUIRE( myClass.listAllStudents() == "A" );
+	}
+	
 }
-
+ 
 TEST_CASE("Combining classes","[combine]"){
 	Classroom class1,class2;
 	
