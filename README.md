@@ -89,3 +89,7 @@ Utilizes a UniqueVector to maintain a unique roster of students names, stored as
 Update the SOURCES section of the makefile with your sources, then compile your code with:
 
     $ make
+
+Execute using:
+
+    ./UniqueVector
