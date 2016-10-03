@@ -26,7 +26,7 @@ public:
     
 private:
     T* mainArray;
-    unsigned int numElements = 0;
+    unsigned int numElements;
     unsigned int currentCapacity;
     void extendArray();
 };

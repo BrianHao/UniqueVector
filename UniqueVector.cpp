@@ -8,6 +8,7 @@ using namespace std;
 template <typename T>
 UniqueVector<T>::UniqueVector(unsigned int initialCapacity)  : currentCapacity(initialCapacity) {
     mainArray = new T[currentCapacity];
+    numElements = 0;
 }
 
 //If the vector contains data, returns true; otherwise, returns false.
