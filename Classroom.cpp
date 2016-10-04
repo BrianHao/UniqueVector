@@ -6,8 +6,8 @@ using namespace std;
 
 //Returns a string containing the names of the students in the classroom, separated by commas.
 string Classroom::listAllStudents() {
-    string listOfStudents;
-    string currentName;
+    string listOfStudents = "";
+    string currentName = "";
     
     //Iterates through the classroomVector and adds each new name to the end of the string.
     for (unsigned int i = 0; i<(classroomVector.size()); i++) {
@@ -22,8 +22,8 @@ string Classroom::listAllStudents() {
 
 //Removes and returns the student whose name comes lexicographically first on the classroom roster.
 string Classroom::removeAlphabeticallyFirst() {
-    string alphaFirst;
-    string comparisonName;
+    string alphaFirst = "";
+    string comparisonName = "";
     
     //Sets alphaFirst to the 0th element in the vector.
     classroomVector.at(0, alphaFirst);
@@ -42,8 +42,8 @@ string Classroom::removeAlphabeticallyFirst() {
 
 //Removes and returns the student whose name comes lexicographically last on the classroom roster.
 string Classroom::removeAlphabeticallyLast() {
-    string alphaLast;
-    string comparisonName;
+    string alphaLast = "";
+    string comparisonName = "";
     
     //Sets alphaLast to the 0th element in the vector.
     classroomVector.at(0, alphaLast);
@@ -63,7 +63,7 @@ string Classroom::removeAlphabeticallyLast() {
 //Adds all of the student names on otherClass’ roster onto the roster of the Classroom calling
 //  this function and leaves otherClass unchanged.
 void Classroom::combineClasses(Classroom& otherClassroom) {
-    string otherStudent;
+    string otherStudent = "";
     
     //Iterates through the otherClass' roster, and adds it to the current Class, if possible.
     for (unsigned int i = 0; i < otherClassroom.classroomVector.size(); i++) {
