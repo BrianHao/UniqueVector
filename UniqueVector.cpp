@@ -15,8 +15,9 @@ UniqueVector<T>::UniqueVector(unsigned int initialCapacity)  : currentCapacity(i
 template <typename T>
 bool UniqueVector<T>::contains(const T& data) {
     if (numElements > 0) {
+        //Iterates through array to find a match
         for (unsigned int i = 0; i < numElements; i++) {
-            if (mainArray[i] == data) {       //Iterates through array to find a match
+            if (mainArray[i] == data) {
                 return true;
             }
         }
@@ -29,8 +30,9 @@ bool UniqueVector<T>::contains(const T& data) {
 template <typename T>
 bool UniqueVector<T>::contains(const T& data, unsigned int& pos) {
     if (numElements > 0) {
+        //Iterates through array to find a match
         for (unsigned int i = 0; i < numElements; i++) {
-            if (mainArray[i] == data) {       //Iterates through array to find a match
+            if (mainArray[i] == data) {
                 pos = i;
                 return true;
             }
@@ -58,14 +60,15 @@ template <typename T>
 bool UniqueVector<T>::insert(const T& data) {
     if (contains(data)) {
         return false;
-    } else {
-        if (numElements == currentCapacity) {
-            extendArray();    //If array is full, extend it
-        }
-        mainArray[numElements] = data;
-        numElements++;
-        return true;
     }
+    
+    //If array is full, extend it
+    if (numElements == currentCapacity) {
+        extendArray();
+    }
+    mainArray[numElements] = data;
+    numElements++;
+    return true;
 }
 
 //If the vector does not already contain data, adds a new element, data, to the
@@ -76,19 +79,22 @@ template <typename T>
 bool UniqueVector<T>::insert(const T& data, unsigned int pos) {
     if (contains(data) || pos > numElements) {
         return false;
-    } else {
-        if (numElements == currentCapacity) {
-            extendArray();    //If array is full, extend it
-        }
-        if (pos != numElements){
-            for (unsigned int i = numElements; i > pos; i--) {
-                mainArray[i] = mainArray[i-1];    //Move all elements after (and including) position pos
-            }                                   //  back by 1 position
-        }
-        mainArray[pos] = data;              //Stores data in position pos
-        numElements++;
-        return true;
     }
+    
+    //If array is full, extend it
+    if (numElements == currentCapacity) {
+        extendArray();
+    }
+    if (pos != numElements){
+        //Move all elements after (and including) position pos back by 1 position
+        for (unsigned int i = numElements; i > pos; i--) {
+            mainArray[i] = mainArray[i-1];
+        }
+    }
+    //Stores data in position pos
+    mainArray[pos] = data;
+    numElements++;
+    return true;
 }
 
 //If the vector contains data, removes data from the vector, reduces the container
@@ -116,8 +122,9 @@ bool UniqueVector<T>::remove(unsigned int pos, T& data) {
     } else {
         data = mainArray[pos];    //Stores element at position pos to data before removing it
         
+        //Moves all elements past position pos down by 1
         for (unsigned int i = pos; i < numElements-1; i++) {
-            mainArray[i] = mainArray[i+1];    //Moves all elements past position pos down by 1
+            mainArray[i] = mainArray[i+1];
         }
         numElements--;
         return true;
@@ -173,15 +180,19 @@ bool UniqueVector<T>::operator==(const UniqueVector<T>& otherUniqueVector) {
 //  contents of the temporary array into the new array.
 template <typename T>
 void UniqueVector<T>::extendArray() {
-    T* tempArray = mainArray;               //Creates temp array & copies over main array
+    //Creates temp array & copies over main array
+    T* tempArray = mainArray;
     
-    delete[] mainArray;                     //Delete current main array
+    //Delete current main array
+    delete[] mainArray;
     
-    currentCapacity *= 2;                         //Double capacity
-    mainArray = new T[currentCapacity];         //Creates new main array with double capacity
+    currentCapacity *= 2;   //Double capacity
+    //Creates new main array with double capacity
+    mainArray = new T[currentCapacity];
     
+    //Copies temp array to the new main array
     for (unsigned int i = 0; i < numElements; i++) {
-        mainArray[i] = tempArray[i];          //Copies temp array to the new main array
+        mainArray[i] = tempArray[i];
     }
     
     return;
