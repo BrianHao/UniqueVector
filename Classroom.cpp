@@ -10,11 +10,11 @@ string Classroom::listAllStudents() {
     string currentName = "";
     
     //Iterates through the classroomVector and adds each new name to the end of the string.
-    for (unsigned int i = 0; i<(classroomVector.size()); i++) {
+    for (unsigned int i = 0; i < classroomVector.size(); i++) {
         classroomVector.at(i, currentName);
-        listOfStudents+=currentName;
-        if (i<(classroomVector.size()-1)) {
-            listOfStudents+=",";
+        listOfStudents += currentName;
+        if (i < classroomVector.size()-1) {
+            listOfStudents += ",";
         }
     }
     return listOfStudents;
@@ -32,7 +32,7 @@ string Classroom::removeAlphabeticallyFirst() {
     for (unsigned int i = 1; i < classroomVector.size(); i++) {
         classroomVector.at(i, comparisonName);
         if (alphaFirst.compare(comparisonName) > 0) {
-            alphaFirst=comparisonName;
+            alphaFirst = comparisonName;
         }
     }
     removeStudent(alphaFirst);
@@ -52,7 +52,7 @@ string Classroom::removeAlphabeticallyLast() {
     for (unsigned int i = 1; i < classroomVector.size(); i++) {
         classroomVector.at(i, comparisonName);
         if (alphaLast.compare(comparisonName) < 0) {
-            alphaLast=comparisonName;
+            alphaLast = comparisonName;
         }
     }
     removeStudent(alphaLast);

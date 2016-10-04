@@ -16,7 +16,7 @@ public:
     bool at(unsigned int pos, T& data); //Finds element at position pos, sets its content to data
     bool insert(const T& data); //Inserts unique data to the end of the vector
     bool insert(const T& data, unsigned int pos); //Inserts unique data to position pos
-    bool push_front(const T& data) { return insert(data,0); }; //Inserts unique data to the front of the vector
+    bool push_front(const T& data) { return insert(data, 0); }; //Inserts unique data to the front of the vector
     bool remove(const T& data); //If data exists in the vector, remove it
     bool remove(unsigned int pos, T& data); //Remove the content at position pos, set the content to data
     bool pop_back(T& data); //Remove the content at the end of the vector

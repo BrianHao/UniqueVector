@@ -14,9 +14,9 @@ UniqueVector<T>::UniqueVector(unsigned int initialCapacity)  : currentCapacity(i
 //If the vector contains data, returns true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::contains(const T& data) {
-    if (numElements>0) {
+    if (numElements > 0) {
         for (unsigned int i = 0; i < numElements; i++) {
-            if (mainArray[i]==data) {       //Iterates through array to find a match
+            if (mainArray[i] == data) {       //Iterates through array to find a match
                 return true;
             }
         }
@@ -28,9 +28,9 @@ bool UniqueVector<T>::contains(const T& data) {
 //  If true, sets pos to the position data was at.
 template <typename T>
 bool UniqueVector<T>::contains(const T& data, unsigned int& pos) {
-    if (numElements>0) {
+    if (numElements > 0) {
         for (unsigned int i = 0; i < numElements; i++) {
-            if (mainArray[i]==data) {       //Iterates through array to find a match
+            if (mainArray[i] == data) {       //Iterates through array to find a match
                 pos = i;
                 return true;
             }
@@ -43,12 +43,11 @@ bool UniqueVector<T>::contains(const T& data, unsigned int& pos) {
 //  stores it in data, and returns true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::at(unsigned int pos, T& data) {
-    if (numElements<=0 || pos>=numElements) {
+    if (numElements <= 0 || pos >= numElements) {
         return false;
     }
     data = mainArray[pos];
     return true;
-
 }
 
 //If the vector does not already contain data, adds a new element, data, to the
@@ -83,7 +82,7 @@ bool UniqueVector<T>::insert(const T& data, unsigned int pos) {
         }
         if (pos != numElements){
             for (unsigned int i = numElements; i > pos; i--) {
-                mainArray[i]=mainArray[i-1];    //Move all elements after (and including) position pos
+                mainArray[i] = mainArray[i-1];    //Move all elements after (and including) position pos
             }                                   //  back by 1 position
         }
         mainArray[pos] = data;              //Stores data in position pos
@@ -112,13 +111,13 @@ bool UniqueVector<T>::remove(const T& data) {
 //  otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::remove(unsigned int pos, T& data) {
-    if (numElements<=0 || pos>=numElements) {
+    if (numElements <= 0 || pos >= numElements) {
         return false;
     } else {
         data = mainArray[pos];    //Stores element at position pos to data before removing it
         
         for (unsigned int i = pos; i < numElements-1; i++) {
-            mainArray[i]=mainArray[i+1];    //Moves all elements past position pos down by 1
+            mainArray[i] = mainArray[i+1];    //Moves all elements past position pos down by 1
         }
         numElements--;
         return true;
@@ -130,7 +129,7 @@ bool UniqueVector<T>::remove(unsigned int pos, T& data) {
 //  true; otherwise, returns false.
 template <typename T>
 bool UniqueVector<T>::pop_back(T& data) {
-    if (numElements<=0) {
+    if (numElements <= 0) {
         return false;
     } else {
         data = mainArray[numElements-1];
@@ -178,11 +177,11 @@ void UniqueVector<T>::extendArray() {
     
     delete[] mainArray;                     //Delete current main array
     
-    currentCapacity*=2;                         //Double capacity
+    currentCapacity *= 2;                         //Double capacity
     mainArray = new T[currentCapacity];         //Creates new main array with double capacity
     
     for (unsigned int i = 0; i < numElements; i++) {
-        mainArray[i]=tempArray[i];          //Copies temp array to the new main array
+        mainArray[i] = tempArray[i];          //Copies temp array to the new main array
     }
     
     return;
