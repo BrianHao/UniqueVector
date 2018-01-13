@@ -1,32 +1,5 @@
-## Assignment 1 - UniqueVector and Classroom
-See the assignment specification pdf. Don't forget to update this README. Happy coding!
-
+## UniqueVector and Classroom
 Brian Hao
-
-CSCI235
-
-
-░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
-░░░░Much unique░░░░░░░▄▀▒▌░░░
-░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐░░░
-░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐░░░
-░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒Wow░
-░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌░░░ 
-░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌░░
-░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐░░
-░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌░
-░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌░
-▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐░
-▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
-▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐░
-░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌░
-░▐▒▒▒▒▒▒▒▒▒▒▒▒Very vector▒▐░░
-░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌░░
-░░░So classroom▒▄▄▄▀▒▒▒▒▄▀░░░
-░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
-░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
-
-
 
 ## UniqueVector
 A custom vector-like ADT that uses a dynamic array as its underlying data structure.
